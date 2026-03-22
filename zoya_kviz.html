@@ -430,6 +430,22 @@
     background: linear-gradient(90deg, var(--rose), var(--lav), var(--peach)); opacity: .6;
   }
   .success-card strong { color: var(--rose-lt); }
+  .success-tg {
+    margin-top: 20px; max-width: 360px; width: 100%; text-align: center;
+  }
+  .success-tg-hint {
+    font-size: 0.88rem; color: var(--muted); line-height: 1.6;
+    margin-bottom: 14px; font-weight: 500;
+  }
+  .success-tg-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: linear-gradient(135deg, #229ED9, #1a7fc1);
+    color: #fff; text-decoration: none; font-weight: 700;
+    font-size: 0.95rem; padding: 13px 28px; border-radius: 50px;
+    box-shadow: 0 4px 20px rgba(34,158,217,0.35);
+    transition: transform .18s, box-shadow .18s;
+  }
+  .success-tg-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 28px rgba(34,158,217,0.5); }
 
   /* ── ВАУ: ЭКРАН УСПЕХА ── */
   @keyframes wobble {
@@ -465,6 +481,23 @@
     .right { padding: 22px 16px 48px; }
     .right .intro h2 { font-size: 1.3rem; }
     .q-title { font-size: 1.15rem; }
+  }
+
+  /* ── CURSOR SPOTLIGHT (только десктоп) ── */
+  @media(pointer: fine) {
+    .page::before {
+      content: '';
+      position: fixed; inset: 0;
+      pointer-events: none;
+      z-index: 2;
+      background: radial-gradient(circle 480px at var(--mx, 50%) var(--my, 50%),
+        rgba(232,112,154,0.07) 0%,
+        rgba(185,128,240,0.04) 40%,
+        transparent 70%);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+    .page.spotlight-active::before { opacity: 1; }
   }
 </style>
 </head>
@@ -800,6 +833,13 @@
             <div class="preview-row">Рекомендации по питанию и восстановлению — без жёстких диет</div>
           </div>
         </div>
+        <div class="success-tg">
+          <p class="success-tg-hint">Хочешь, чтобы я ответила быстрее? Напиши мне сама, что прошла тест — так я сразу найду тебя в мессенджере 💬</p>
+          <a class="success-tg-btn" href="https://t.me/Zoya7751" target="_blank" rel="noopener">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm4.93 6.702l-1.686 7.938c-.127.566-.461.703-.934.437l-2.58-1.9-1.244 1.197c-.138.138-.254.254-.52.254l.185-2.634 4.79-4.328c.208-.185-.046-.288-.323-.103L8.132 14.67l-2.542-.794c-.553-.173-.564-.553.115-.82l9.641-3.717c.461-.168.865.103.724.82-.001-.001-.001.001 0 0z" fill="white"/></svg>
+            Написать Зое в Telegram
+          </a>
+        </div>
       </div>
     </div>
 
@@ -921,11 +961,40 @@
     document.getElementById('rpanel').scrollTo({ top: 0, behavior: 'smooth' });
   }
 
+  const TG_TOKEN = '8741725980:AAEVMokyYLrZf2D1TEZ4b09ZsJwNGTER0Ko';
+  const TG_CHAT  = '-1003885433929';
+
   function submit() {
-    console.log('Answers:', ans);
-    // TODO: fetch('/submit', { method:'POST', body: JSON.stringify(ans) })
-    const name = ans[11] || '';
-    document.getElementById('uname').textContent = name ? name : 'друг';
+    if (submit._sent) return;
+    submit._sent = true;
+
+    const name     = ans[11] || '';
+    const contact  = [ans[12]?.messenger, ans[12]?.phone].filter(Boolean).join(' / ') || '—';
+    const lines = [
+      '🌸 <b>Новый лид с квиза!</b>',
+      '',
+      `👤 <b>Имя:</b> ${name || '—'}`,
+      `📱 <b>Контакт:</b> ${contact}`,
+      `🎂 <b>Возраст:</b> ${ans[10] || '—'}`,
+      `📏 <b>Рост / Вес:</b> ${ans[9]?.height || '—'} / ${ans[9]?.weight || '—'}`,
+      '',
+      `1️⃣ <b>Цель:</b> ${ans[1] || '—'}`,
+      `2️⃣ <b>Энергия:</b> ${ans[2] || '—'}`,
+      `3️⃣ <b>Диеты:</b> ${ans[3] || '—'}`,
+      `4️⃣ <b>Тип диет:</b> ${ans[4] || '—'}`,
+      `5️⃣ <b>Питание:</b> ${ans[5] || '—'}`,
+      `6️⃣ <b>Зона набора:</b> ${ans[6] || '—'}`,
+      `7️⃣ <b>Здоровье:</b> ${ans[7] || '—'}`,
+      `8️⃣ <b>Что мешает:</b> ${ans[8] || '—'}`,
+    ];
+
+    fetch(`https://api.telegram.org/bot${TG_TOKEN}/sendMessage`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ chat_id: TG_CHAT, text: lines.join('\n'), parse_mode: 'HTML' })
+    }).catch(() => {});
+
+    document.getElementById('uname').textContent = name || 'друг';
     document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
     gS(13).classList.add('active');
     document.getElementById('pfill').style.width = '100%';
@@ -1019,6 +1088,19 @@
       icon.addEventListener('animationend', () => icon.classList.remove('wobble'), { once: true });
     }, 500);
     setTimeout(() => { success.classList.add('revealed'); }, 200);
+  }
+
+  /* ── CURSOR SPOTLIGHT ── */
+  if (window.matchMedia('(pointer: fine)').matches) {
+    const page = document.querySelector('.page');
+    document.addEventListener('mousemove', e => {
+      page.style.setProperty('--mx', e.clientX + 'px');
+      page.style.setProperty('--my', e.clientY + 'px');
+      page.classList.add('spotlight-active');
+    });
+    document.addEventListener('mouseleave', () => {
+      page.classList.remove('spotlight-active');
+    });
   }
 </script>
 </body>
