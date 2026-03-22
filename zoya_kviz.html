@@ -110,9 +110,13 @@
   }
   .left h1 em {
     font-style: italic;
-    background: linear-gradient(120deg, #f7bdd1 0%, #b980f0 50%, #fdb47a 100%);
+    background: linear-gradient(120deg, #f7bdd1 0%, #b980f0 25%, #fdb47a 50%, #b980f0 75%, #f7bdd1 100%);
+    background-size: 200% auto;
     -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: shimmer 3s linear infinite;
   }
+  @keyframes shimmer { to { background-position: 200% center; } }
 
   /* Подзаголовок */
   .left .sub {
@@ -231,9 +235,13 @@
     display: flex; align-items: center; justify-content: center;
   }
 
+  @keyframes btnShimmer { 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
+
   /* Большая кнопка старта */
   .btn-start {
-    background: linear-gradient(135deg, var(--rose), var(--lav));
+    background: linear-gradient(135deg, #e8709a, #b980f0, #fdb47a, #e8709a);
+    background-size: 300% 300%;
+    animation: btnShimmer 3s ease infinite;
     color: #fff; border: none; border-radius: 50px;
     padding: 18px 52px; font-size: 1.1rem; font-weight: 800;
     cursor: pointer; font-family: 'Nunito', sans-serif;
@@ -385,7 +393,9 @@
   .btn-back:hover:not(:disabled) { border-color: rgba(255,255,255,.28); color: var(--text); }
   .btn-back:disabled { opacity: .2; cursor: default; }
   .btn-next {
-    background: linear-gradient(135deg, var(--rose), var(--lav));
+    background: linear-gradient(135deg, #e8709a, #b980f0, #fdb47a, #e8709a);
+    background-size: 300% 300%;
+    animation: btnShimmer 3s ease infinite;
     color: #fff; border: none; border-radius: 50px;
     padding: 12px 30px; font-size: 0.95rem; font-weight: 800;
     cursor: pointer; font-family: 'Nunito', sans-serif;
