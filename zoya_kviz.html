@@ -9,17 +9,17 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,800;1,600&family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg:      #F4F0EB;
-    --bg2:     #EBE5DC;
-    --rose:    #6B9B6E;
-    --rose-lt: #A5C49A;
-    --lav:     #4A7A52;
+    --bg:      #F4ECD3;
+    --bg2:     #EDE4C4;
+    --rose:    #5F7838;
+    --rose-lt: #A9AC5B;
+    --lav:     #41582D;
     --peach:   #C9A96E;
-    --text:    #1E2820;
-    --muted:   #7A8C74;
-    --soft:    rgba(30,40,32,0.45);
-    --border:  rgba(107,155,110,0.22);
-    --card:    rgba(107,155,110,0.06);
+    --text:    #2C3A1E;
+    --muted:   #7A7A68;
+    --soft:    rgba(44,58,30,0.45);
+    --border:  rgba(95,120,56,0.28);
+    --card:    rgba(95,120,56,0.07);
     --gold:    #C9A96E;
     --gold-lt: #E8D5A8;
   }
@@ -112,7 +112,7 @@
   }
   .left h1 em {
     font-style: italic;
-    background: linear-gradient(120deg, #A8BFA0 0%, #5C7A52 25%, #8FA887 50%, #5C7A52 75%, #A8BFA0 100%);
+    background: linear-gradient(120deg, #CDD3A6 0%, #41582D 25%, #A9AC5B 50%, #41582D 75%, #CDD3A6 100%);
     background-size: 200% auto;
     -webkit-background-clip: text; -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -225,8 +225,8 @@
   }
   .step-item {
     display: flex; align-items: center; gap: 14px;
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.09);
+    background: rgba(255,255,255,0.6);
+    border: 1px solid rgba(107,155,110,0.18);
     border-radius: 14px; padding: 14px 16px;
     font-size: 0.95rem; color: var(--muted); font-weight: 500;
   }
@@ -241,7 +241,7 @@
 
   /* Большая кнопка старта */
   .btn-start {
-    background: linear-gradient(135deg, #7C9A6E, #5C7A52, #8FA887, #7C9A6E);
+    background: linear-gradient(135deg, #5F7838, #41582D, #7A9645, #5F7838);
     background-size: 300% 300%;
     animation: btnShimmer 3s ease infinite;
     color: #fff; border: none; border-radius: 50px;
@@ -395,7 +395,7 @@
   .btn-back:hover:not(:disabled) { border-color: rgba(107,155,110,0.6); color: var(--text); }
   .btn-back:disabled { opacity: .2; cursor: default; }
   .btn-next {
-    background: linear-gradient(135deg, #7C9A6E, #5C7A52, #8FA887, #7C9A6E);
+    background: linear-gradient(135deg, #5F7838, #41582D, #7A9645, #5F7838);
     background-size: 300% 300%;
     animation: btnShimmer 3s ease infinite;
     color: #fff; border: none; border-radius: 50px;
@@ -420,7 +420,7 @@
   .success p { color: var(--muted); font-size: 1rem; line-height: 1.75; max-width: 340px; font-weight: 500; }
   .success-card {
     margin-top: 22px; max-width: 360px; width: 100%;
-    background: rgba(255,255,255,0.04);
+    background: rgba(255,255,255,0.65);
     border: 1px solid rgba(124,154,110,0.22);
     border-radius: 16px; padding: 18px 22px;
     font-size: 0.95rem; color: var(--muted); line-height: 1.7; text-align: left;
